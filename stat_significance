@@ -1,0 +1,10 @@
+# Посмотреть качетсво модели можно по аттрибуту .aic
+data = pd.read_csv('https://stepic.org/media/attachments/course/524/train.csv')
+data = data[data.Age.notnull()]
+
+# выживаемость по классам
+glm_binom = smf.glm(
+    formula="Survived ~ C(Pclass)"
+    , data=data
+    , family=sm.families.Binomial()).fit()
+print(glm_binom.aic)
