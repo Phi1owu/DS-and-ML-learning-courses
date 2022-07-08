@@ -1,0 +1,3 @@
+plt.rcParams['figure.figsize']=(12, 8) # ура, установили размер
+mosaic(data, ['Survived', 'Sex', 'Pclass'], gap = 0.02, title='Survived from Titanic')
+plt.show()
