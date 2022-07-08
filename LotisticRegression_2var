@@ -1,0 +1,30 @@
+import pandas as pd
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+
+
+category_columns = { col: 'category' for col in ['Survived', 'Sex'] }  # приведение выбранных колонок к категориальному
+
+data = pd.read_csv('https://stepic.org/media/attachments/course/524/train.csv', dtype=category_columns)
+
+# Зависимая переменная обычно обозначается как "Y" или "y"
+Y = data.loc[:,'Survived'].cat.codes
+
+# То о чем говорил преподаватель: колонку пол c сдвумя градациями нужно трансформировать в 2 колонки для каждого пола
+X = sm.add_constant( data.loc[:,'Sex'].cat.codes )
+
+#
+# ВЫЧИСЛЯЕМ  
+#
+# Классическое представление результат-предиктор(ы), которое используется в классификаторах
+glm_binom = sm.GLM(Y, X, family=sm.families.Binomial())
+res = glm_binom.fit()
+
+# Можно и так (кто привык к R)
+glm_binom_rstyle = smf.glm(formula="Survived ~ Sex", data=data, family=sm.families.Binomial())
+res_rstyle = glm_binom_rstyle.fit()
+
+
+print( res.summary() )
+print( res_rstyle.summary() )
