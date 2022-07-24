@@ -1,0 +1,15 @@
+from scipy.cluster.hierarchy import dendrogram, linkage
+from matplotlib import pyplot as plt
+import numpy as np
+
+# Для прорисовки графики
+%matplotlib inline
+
+# Наши данные
+points = np.array([[1,2], [2,1], [2,2], [1,3], [6,7], [6,5], [7,8], [8,8]], dtype=float)
+
+Z = linkage(points, 'ward')
+fig = plt.figure(figsize=(25, 10))
+dn = dendrogram(Z)
+
+plt.show()
